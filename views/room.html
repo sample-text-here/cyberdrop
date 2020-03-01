@@ -4,21 +4,39 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Socket.IO chat</title>
+    <title>Cyberdrop |</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A cool thing made with Glitch" />
-    
+
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
     <div id="drop">
-      <span id="title">&lt; Drag and drop a file here &gt;</span>
+      <div id="title">&lt; Drag and drop a file here &gt;</div>
       <canvas id="anim" />
-    </div><br>
-    <ul id="files">
-      <li id="title">Your files will appear here</li>
-    </ul>
+    </div>
+    <br />
+    <table id="files">
+      <colgroup>
+        <col span="1" style="width: 20%;" />
+        <col span="1" style="width: 70%;" />
+        <col span="1" style="width: 10%;" />
+      </colgroup>
+      <tr>
+        <th id="fname" colspan="3">Your files will appear here</th>
+      </tr>
+      <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Type</th>
+      </tr>
+    </table><br>
+    <form id="message" autocomplete="off">
+       <input type="input" placeholder="message everyone" id="input" required />
+      <input type="submit" id="submit">
+    </form>
+
     <script src="/socket.js"></script>
     <script src="/room.js"></script>
   </body>
