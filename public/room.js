@@ -1,3 +1,5 @@
+const $ = e => document.getElementById(e);
+document.title += " " + location.pathname.slice(1);
 function animate() {
   context.fillStyle = "black";
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -35,7 +37,7 @@ function animate() {
   window.requestAnimationFrame(animate); // request another animation frame
 }
 
-let canvas = document.getElementById("anim");
+let canvas = $("anim");
 let context = canvas.getContext("2d");
 let stars = []; // the array of stars
 canvas.style.width = "100%";
@@ -44,7 +46,7 @@ canvas.width = canvas.offsetWidth;
 canvas.height = canvas.offsetHeight;
 window.requestAnimationFrame(animate);
 
-var dropZone = document.getElementById("drop");
+var dropZone = $("drop");
 
 // Optional.   Show the copy icon when dragging over.  Seems to only work for chrome.
 dropZone.addEventListener("dragover", function(e) {
@@ -66,38 +68,68 @@ dropZone.addEventListener("dragleave", function(e) {
     dropZone.classList.remove("hover");
   }
 });
-// Get file data on drop
 
+// Get file data on drop
+var from;
 dropZone.addEventListener("drop", function(e) {
   e.preventDefault();
   e.stopPropagation();
   var file = e.dataTransfer.files[0];
   dropZone.classList.remove("hover");
   var blob = new Blob([file]);
-  socket.emit("file", {
+  from = +(Math.random() + "").substring(2);
+  var x = socket.emit("send-file", {
     file: blob,
     type: file.type,
     for: location.pathname,
-    name: file.name
+    name: file.name,
+    from: from
   });
-  var li = document.createElement("li");
-  li.innerText = "Sent: " + file.name;
-  document.getElementById("files").appendChild(li);
+  $("title").innerHTML = "Sending <span class=\"dots\"></span>";
+  counter--;
 });
 
-const $ = e => document.getElementById(e);
+$("message").addEventListener("submit", e => {
+  e.preventDefault();
+  socket.emit("send-msg", {
+    msg: $("input").value,
+    for: location.pathname
+  });
+  $("input").value = "";
+});
+
 console.log("hello world :o");
 var socket = io();
 socket.on("file", function(msg) {
   var file = new Blob([msg.file], { type: msg.type });
-  saveData(file, msg.name);
-  var li = document.createElement("li");
-  li.innerText = "Recieved: " + msg.name;
-  document.getElementById("files").appendChild(li);
+  if (msg.from == from) {
+    $("title").innerText="<Drag and drop a file here>";
+  } else {
+    saveData(file, msg.name);
+  }
+  var tr = document.createElement("tr");
+  tr.innerHTML = `<td>${getTime(new Date())}</td><td>${cleanStr(
+    msg.name
+  )}</td><td>${msg.type}</td>`;
+  document.getElementById("files").appendChild(tr);
+});
+
+socket.on("msg", function(msg) {
+  var tr = document.createElement("tr");
+  tr.innerHTML = `<td>${getTime(new Date())}</td><td>Message: ${
+    msg.msg
+  }</td><td>Message</td>`;
+  document.getElementById("files").appendChild(tr);
 });
 
 socket.on("connect", function() {
   socket.emit("room", location.pathname);
+});
+
+socket.on("announce", function(msg) {
+  var tr = document.createElement("tr");
+  tr.innerHTML = `<td colspan="3" style="text-align:center"><b>${msg}</b></td>`;
+  document.getElementById("files").appendChild(tr);
 });
 
 function saveData(blob, filename) {
@@ -111,4 +143,22 @@ function saveData(blob, filename) {
   setTimeout(() => {
     window.URL.revokeObjectURL(url);
   }, 10);
+}
+
+function cleanStr(str) {
+  return str
+    .replace(/>/g, "&gt;")
+    .replace(/</g, "&lt;")
+    .replace(/&/g, "&amp;");
+}
+
+function getTime(date) {
+  console.log(date);
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? "pm" : "am";
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  return hours + ":" + minutes + " " + ampm;
 }

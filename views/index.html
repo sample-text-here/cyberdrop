@@ -4,20 +4,37 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Socket.IO chat</title>
+    <title>Cyberdrop</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A cool thing made with Glitch" />
-    
-    <link rel="stylesheet" type="text/css" href="style.css" />
+
+    <link rel="stylesheet" type="text/css" href="index.css" />
   </head>
   <body>
-    <h1>
-      Hi
-    </h1>
-    <p>
-       add "/ghghgh" or something to the end of your url
-    </p>
+    <div class="welcome">
+      <div class="side create">
+        <h1>Create a channel</h1>
+        <a id="new">
+          <button class="button">
+            New channel
+          </button>
+        </a>
+      </div>
+      <div class="line"></div>
+      <div class="side join">
+        <h1>Join a channel</h1>
+        <form id="join" autocomplete="off">
+          <input
+            type="text"
+            placeholder="Channel name"
+            id="channel"
+            class="input"
+          />
+        <button class="button">Join</button>
+        </form>
+      </div>
+    </div>
     <script src="/script.js"></script>
   </body>
 </html>

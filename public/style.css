@@ -10,24 +10,67 @@ body {
 }
 
 #files {
-  list-style-type: none;
-  margin: 0;
   padding: 0;
-  width:80%;
-  margin:auto;
-  border:solid black 2px;
+  width: 80%;
+  margin: auto;
+  border: solid black 2px;
+  border-collapse: collapse;
 }
 
-#files li {
+#files tr {
   padding: 5px 10px;
 }
 
-#files li#title {
+#files th {
+  padding: 5px 10px;
+  border-bottom: 2px solid #000000;
+}
+
+#files th #date {
+  width: 20%;
+}
+
+#files td {
+  padding: 5px 10px;
+
+  /*   border: 2px solid #000000; */
+}
+
+#files tr#fname {
   font-weight: bold;
 }
 
-#files li:nth-child(odd) {
+#files tr:nth-child(odd) {
   background: #eee;
+}
+
+#message {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  padding: 2px;
+  border: solid black 2px;
+  position: relative;
+}
+
+@media only screen and (max-width: 600px) {
+  #message {
+    flex-direction: column;
+  }
+}
+
+#submit {
+  background: #eee;
+  border: none;
+  border-radius: 2px;
+  padding: 2px;
+  flex-grow: 1;
+  margin: 5px;
+}
+
+#input {
+  flex-grow: 9;
+  margin: 5px;
 }
 
 #drop {
@@ -80,4 +123,43 @@ body {
 
 #drop.hover #title {
   opacity: 0;
+}
+
+#input {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid #9b9b9b;
+  transition: border-color 0.2s;
+}
+
+#input::placeholder {
+  display: block;
+  position: absolute;
+  top: 0;
+  transition: all 0.2s;
+}
+
+#input:focus {
+  border-color: #000;
+}
+
+#input:focus::placeholder {
+  color:#000;
+}
+
+#input:required,
+#input:invalid {
+  box-shadow: none;
+}
+
+.dots:after {
+  animation: loading 0.6s infinite linear;
+  content:' .';
+}
+
+@keyframes loading {
+  0%{content:''}
+  33%{content:'.'}
+  66%{content:'..'}
+  100%{content:'...'}
 }
