@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Open Sans", sans-serif;
   margin: 0;
@@ -20,12 +24,12 @@ body {
 }
 
 .create {
-  --colour: #63bd67;
+  --color: #7b1fa2;
   text-align: right;
 }
 
 .join {
-  --colour: #6295bd;
+  --color: #7b1fa2;
 }
 
 .line {
@@ -44,9 +48,8 @@ body {
   border: none;
   background: none;
   border-radius: 5px;
-  background-color: var(--colour);
+  background-color: var(--color);
   color: white;
-  font: inherit;
   font-size: 24px;
   height: 40px;
   width: 100%;
@@ -55,17 +58,14 @@ body {
 
 .input {
   -webkit-appearance: none;
-  border: 3px solid var(--colour);
+  border: 3px solid var(--color);
   background: none;
   border-radius: 5px;
   background-color: white;
-  font: inherit;
-  color: #333;
   font-size: 24px;
   padding: 5px;
   height: 40px;
   width: 100%;
-  box-sizing: border-box;
   margin-bottom: 15px;
   text-align: center;
 }

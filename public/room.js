@@ -1,5 +1,16 @@
 const $ = e => document.getElementById(e);
 document.title += " " + location.pathname.slice(1);
+window.onload = () => {
+  var tr = document.createElement("tr");
+  tr.innerHTML = `<td>${getTime(new Date())}</td><td colspan="2">${cleanStr(
+    "Channel ID: " + location.pathname.slice(1)
+  )}</td>`;
+  document.getElementById("files").appendChild(tr);
+  tr.classList.add("announce");
+  tr.style.color = "white";
+  tr.style.backgroundColor = "#7b1fa2";
+};
+
 function animate() {
   context.fillStyle = "black";
   context.fillRect(0, 0, canvas.width, canvas.height);
@@ -85,7 +96,7 @@ dropZone.addEventListener("drop", function(e) {
     name: file.name,
     from: from
   });
-  $("title").innerHTML = "Sending <span class=\"dots\"></span>";
+  $("title").innerHTML = 'Sending <span class="dots"></span>';
   counter--;
 });
 
@@ -103,7 +114,7 @@ var socket = io();
 socket.on("file", function(msg) {
   var file = new Blob([msg.file], { type: msg.type });
   if (msg.from == from) {
-    $("title").innerText="<Drag and drop a file here>";
+    $("title").innerText = "Drag and drop a file here";
   } else {
     saveData(file, msg.name);
   }
@@ -128,7 +139,8 @@ socket.on("connect", function() {
 
 socket.on("announce", function(msg) {
   var tr = document.createElement("tr");
-  tr.innerHTML = `<td colspan="3" style="text-align:center"><b>${msg}</b></td>`;
+  tr.classList.add("announce");
+  tr.innerHTML = `<td colspan="3"><b>${msg}</b></td>`;
   document.getElementById("files").appendChild(tr);
 });
 

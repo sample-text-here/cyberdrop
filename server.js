@@ -1,4 +1,5 @@
 const express = require("express");
+const friendlyWords = require('friendly-words');
 const app = express();
 
 app.use(express.static(__dirname + "/public"));
@@ -43,4 +44,15 @@ io.on("connection", function(socket) {
     }
     io.in(room).emit("announce", "Somebody joined - Total: " + users[room]);
   });
+  socket.on("pair", function(msg) {
+    socket.emit("pair", pair());    
+  });
 });
+
+function pair() {
+  var res="";
+  res+=friendlyWords.predicates[Math.floor(Math.random()*friendlyWords.predicates.length)];
+  res+="-";
+  res+=friendlyWords.objects[Math.floor(Math.random()*friendlyWords.objects.length)];
+  return res;
+}

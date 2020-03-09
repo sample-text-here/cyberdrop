@@ -23,7 +23,6 @@ body {
 
 #files th {
   padding: 5px 10px;
-  border-bottom: 2px solid #000000;
 }
 
 #files th #date {
@@ -32,8 +31,6 @@ body {
 
 #files td {
   padding: 5px 10px;
-
-  /*   border: 2px solid #000000; */
 }
 
 #files tr#fname {
@@ -42,6 +39,10 @@ body {
 
 #files tr:nth-child(odd) {
   background: #eee;
+}
+
+.announce {
+  text-align: center;
 }
 
 #message {
@@ -119,6 +120,7 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 1.3em;
 }
 
 #drop.hover #title {
@@ -140,11 +142,17 @@ body {
 }
 
 #input:focus {
-  border-color: #000;
+  border-color: #7b1fa2;
 }
 
 #input:focus::placeholder {
-  color:#000;
+  color: #7b1fa2;
+}
+
+#submit:hover {
+  background: #7b1fa2;
+  color: white;
+  transition: all 0.2s;
 }
 
 #input:required,
@@ -154,12 +162,21 @@ body {
 
 .dots:after {
   animation: loading 0.6s infinite linear;
-  content:' .';
+  content: "";
+  font-family: monospace;
 }
 
 @keyframes loading {
-  0%{content:''}
-  33%{content:'.'}
-  66%{content:'..'}
-  100%{content:'...'}
+  0% {
+    content: "   ";
+  }
+  33% {
+    content: ".  ";
+  }
+  66% {
+    content: ".. ";
+  }
+  100% {
+    content: "...";
+  }
 }
